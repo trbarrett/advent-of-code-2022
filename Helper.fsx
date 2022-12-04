@@ -7,6 +7,7 @@ open System.Collections.Generic
 
 let flip f a b = f b a
 let mkTuple x y = x, y
+
 let tee f x = f x; x
 
 let startStopwatch () = System.Diagnostics.Stopwatch.StartNew ()
