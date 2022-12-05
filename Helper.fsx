@@ -150,8 +150,6 @@ module List =
             | Choice2Of3 b -> (accA, b::accB, accC)
             | Choice3Of3 c -> (accA, accB, c::accC))
 
-
-
 module Seq =
     let groupByTuple (xs : ('a * 'b) seq) =
         xs
@@ -193,6 +191,15 @@ module String =
         Regex.Match(input, regexPattern).Groups
         |> Seq.skip 1
         |> Seq.map (fun x -> x.Value)
+        |> List.ofSeq
+
+    let captures regexPattern (input : string) =
+        Regex.Matches(input, regexPattern)
+        |> Seq.map (fun m ->
+            m.Groups
+            |> Seq.skip 1
+            |> Seq.map (fun x -> x.Value)
+            |> List.ofSeq)
         |> List.ofSeq
 
 module Char =
