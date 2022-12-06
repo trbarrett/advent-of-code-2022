@@ -22,6 +22,16 @@ module Puzzle =
     let measurePart1 f input = measurePart 1 f input
     let measurePart2 f input = measurePart 2 f input
 
+    let measurePartµs partN f input =
+        let sw = startStopwatch ()
+        let result = f input
+        let µs = sw.ElapsedTicks / 10_000L
+        printfn "Part %d result: %A took: %sµs" partN result (µs.ToString("N0"))
+
+    let measurePart1µs f input = measurePartµs 1 f input
+    let measurePart2µs f input = measurePartµs 2 f input
+
+
     let public readLinesWithHashComments inputName =
         sprintf "%s/inputdata/%s" __SOURCE_DIRECTORY__ inputName
         |> File.ReadLines

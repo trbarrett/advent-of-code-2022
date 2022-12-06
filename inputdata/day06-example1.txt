@@ -1,0 +1,10 @@
+mjqjpqmgbljsphdztnvjfqwrcgsmlb
+# ^ Part 1 at 7th char, Part 2 at 19th char
+bvwbjplbgvbhsrlpgdmjqwftvncz
+# ^ Part 1 at 5th char, Part 2 at 23th char
+nppdvjthqldpwncqszvftbrmjlhg
+# ^ Part 1 at 6th char, Part 2 at 23th char
+nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg
+# ^ Part 1 at 10th char, Part 2 at 29th char
+zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw
+# ^ Part 1 at 11th char, Part 2 at 26th char

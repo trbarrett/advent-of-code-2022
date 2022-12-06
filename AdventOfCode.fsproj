@@ -10,8 +10,10 @@
         <None Include="Range.fsx" />
         <None Include="Day01.fsx" />
         <None Include="Day02.fsx" />
+        <None Include="Day03.fsx" />
         <None Include="Day04.fsx" />
         <None Include="Day05.fsx" />
+        <None Include="Day06.fsx" />
     </ItemGroup>
 
     <ItemGroup>

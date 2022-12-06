@@ -27,12 +27,12 @@ let performRearrangements stacks rearrangements moveFn =
 let part1 (stacks, rearrangements) =
     performRearrangements stacks rearrangements moveStack9000
     |> Seq.map List.head |> Seq.toString ""
-    // Correct Answer: VQZNJMWTR, took: 1ms
+    // Correct Answer: VQZNJMWTR, took: 146µs
 
 let part2 (stacks, rearrangements) =
     performRearrangements stacks rearrangements moveStack9001
     |> Seq.map List.head |> Seq.toString ""
-    // Correct Answer: NLCDCLVMQ, took: 1ms
+    // Correct Answer: NLCDCLVMQ, took: 139µs
 
 let stacks, rearrangements =
     let [stacks; rearrangements] =
@@ -60,5 +60,5 @@ let stacks, rearrangements =
 
 [for _ in 1..3 do part1 (stacks, rearrangements) |> ignore ] // warmup the script runner for accurate timings
 
-Puzzle.measurePart1 part1 (stacks, rearrangements)
-Puzzle.measurePart2 part2 (stacks, rearrangements)
+Puzzle.measurePart1µs part1 (stacks, rearrangements)
+Puzzle.measurePart2µs part2 (stacks, rearrangements)

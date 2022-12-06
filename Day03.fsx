@@ -20,7 +20,7 @@ let part1 (rucksacks : seq<string>) =
     |> Seq.map (fun str -> str.Substring(0, str.Length/2), str.Substring(str.Length/2) )
     |> Seq.map findDuplicateItem
     |> Seq.sumBy letterPriority
-    // Correct Answer: 7746, took: 1ms
+    // Correct Answer: 7746, took: 172µs
 
 let part2 (rucksacks : seq<string>) =
     rucksacks
@@ -28,11 +28,11 @@ let part2 (rucksacks : seq<string>) =
     |> Seq.chunkBySize 3
     |> Seq.map (Set.intersectMany >> Set.minElement)
     |> Seq.sumBy letterPriority
-    // Correct Answer: 2604, took: 1ms
+    // Correct Answer: 2604, took: 418µs
 
 let rucksacks = Puzzle.readLinesWithHashComments "day03.txt"
 
 [for _ in 1..3 do part1 rucksacks |> ignore ] // warmup the script runner for accurate timings
 
-Puzzle.measurePart1 part1 rucksacks
-Puzzle.measurePart2 part2 rucksacks
+Puzzle.measurePart1µs part1 rucksacks
+Puzzle.measurePart2µs part2 rucksacks

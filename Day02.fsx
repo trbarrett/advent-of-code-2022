@@ -52,18 +52,18 @@ let part1 strategyGuide =
     strategyGuide
     |> Seq.map (fun (x,y) -> HandShape.fromChar x, HandShape.fromChar y)
     |> Seq.sumBy roundScore
-    // Correct Answer: 13484, took: 2ms
+    // Correct Answer: 13484, took: 166µs
 
 let part2 strategyGuide =
     strategyGuide
     |> Seq.map (fun (x,y) -> HandShape.fromChar x, Outcome.fromChar y)
     |> Seq.map (fun (x,o) -> x, handShapeToAchieveOutcome (x,o))
     |> Seq.sumBy roundScore
-    // Correct Answer: 13433, took: 2ms
+    // Correct Answer: 13433, took: 216µs
 
 let strategyGuide =
     Puzzle.readLinesWithHashComments "day02.txt"
     |> Seq.map (fun str -> str.[0], str.[2])
 
-Puzzle.measurePart1 part1 strategyGuide
-Puzzle.measurePart2 part2 strategyGuide
+Puzzle.measurePart1µs part1 strategyGuide
+Puzzle.measurePart2µs part2 strategyGuide

@@ -15,13 +15,13 @@ let part1 sectionAssignments =
         | Some intersection -> intersection = section1 || intersection = section2
         | None -> false)
     |> Seq.length
-    // Correct Answer: 526, took: 1ms
+    // Correct Answer: 526, took: 361µs
 
 let part2 sectionAssignments =
     sectionAssignments
     |> Seq.choose ((<||) Range.tryUnion)
     |> Seq.length
-    // Correct Answer: 886, took: 1ms
+    // Correct Answer: 886, took: 352µs
 
 let sectionAssignments =
     Puzzle.readLinesWithHashComments "day04.txt"
@@ -31,5 +31,5 @@ let sectionAssignments =
 
 [for _ in 1..3 do part1 sectionAssignments |> ignore ] // warmup the script runner for accurate timings
 
-Puzzle.measurePart1 part1 sectionAssignments
-Puzzle.measurePart2 part2 sectionAssignments
+Puzzle.measurePart1µs part1 sectionAssignments
+Puzzle.measurePart2µs part2 sectionAssignments

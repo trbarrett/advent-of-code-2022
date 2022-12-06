@@ -10,7 +10,7 @@ let part1 numbers =
     numbers
     |> List.map List.sum
     |> List.max
-    // Correct Answer: 74394, took: 0ms
+    // Correct Answer: 74394, took: 32µs
 
 let part2 numbers =
     numbers
@@ -18,12 +18,12 @@ let part2 numbers =
     |> List.sortDescending
     |> List.take 3
     |> List.sum
-    // Correct Answer: 212836, took: 1ms
+    // Correct Answer: 212836, took: 230µs
 
 let numbers =
     Puzzle.readLinesWithHashComments "day01.txt"
     |> splitOnEmptyLines
     |> List.map (List.map int32)
 
-Puzzle.measurePart1 part1 numbers
-Puzzle.measurePart2 part2 numbers
+Puzzle.measurePart1µs part1 numbers
+Puzzle.measurePart1µs part2 numbers
