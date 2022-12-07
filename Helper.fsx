@@ -89,6 +89,13 @@ module Map =
            let values = maps |> Seq.map (Map.tryFind key)
            acc |> Map.add key (f values))
 
+    // Replaces a value in a map by first finding it, calling a given function
+    // with that value (or a default if none was found), then setting it back
+    // in the Map
+    let replace key defaultValue f m =
+        let existing = m |> Map.tryFind key |> Option.defaultValue defaultValue
+        m |> Map.add key (f existing)
+
 module List =
     let permutationsWithReplacement (values : 'a list) times =
         let splitValues = values |> List.map List.singleton
@@ -135,6 +142,11 @@ module List =
             | x::xs -> loop xs (x::frnt)
             | [] -> failwithf "Found nothing to match the predicate in given list"
         loop lst []
+
+    let removeLast lst =
+        match lst with
+        | [] -> []
+        | lst -> List.removeAt (List.length lst - 1) lst
 
     /// Given a list of tuples, and treating each tuple as key/value pairs,
     /// this function will combine the values where there are duplicate pairs
@@ -211,6 +223,16 @@ module String =
             |> Seq.map (fun x -> x.Value)
             |> List.ofSeq)
         |> List.ofSeq
+
+let (|StartsWith|_|) (p:string) (s:string) =
+    if s.StartsWith(p)
+    then Some(s.Substring(p.Length))
+    else None
+
+let (|Capture|_|) regex (s:string) =
+    match String.capture regex s with
+    | [] -> None
+    | items -> Some(items)
 
 module Char =
     let digitToInt (c : char) = int c - int '0'
