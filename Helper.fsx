@@ -172,6 +172,15 @@ module List =
             | Choice2Of3 b -> (accA, b::accB, accC)
             | Choice3Of3 c -> (accA, accB, c::accC))
 
+module Array =
+
+    // Works the same as takeWhile, except it will include the first item that
+    // matches the function if there is one
+    let takeWithFirst f xs =
+        match Array.tryFindIndex (f >> not) xs with
+        | Some idx -> Array.sub xs 0 (idx + 1)
+        | None -> Array.copy xs
+
 module Seq =
     let groupByTuple (xs : ('a * 'b) seq) =
         xs
