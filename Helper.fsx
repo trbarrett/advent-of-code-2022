@@ -96,6 +96,28 @@ module Map =
         let existing = m |> Map.tryFind key |> Option.defaultValue defaultValue
         m |> Map.add key (f existing)
 
+module Set =
+
+    // If the set contains points (x,y tuples), then this function will print
+    // out the full grid, with '.' for empty spaces, '#' for points within
+    // the set, and 'o' for the origin
+    let printSetPoints tails =
+        let getExtents tails =
+            let x,y = Set.minElement tails
+            ((x, x, y, y), tails)
+            ||> Seq.fold (fun (xMin, xMax, yMin, yMax) (x, y) ->
+                min xMin x, max xMax x, min yMin y, max yMax y)
+
+        let (xMin, xMax, yMin, yMax) = getExtents tails
+        [yMax..(-1)..yMin]
+        |> List.iter (fun y ->
+            [xMin..xMax]
+            |> List.iter (fun x ->
+                if (x,y) = (0,0) then printf "o"
+                elif Set.contains (x,y) tails then printf "#"
+                else printf ".")
+            printfn "")
+
 module List =
     let permutationsWithReplacement (values : 'a list) times =
         let splitValues = values |> List.map List.singleton
