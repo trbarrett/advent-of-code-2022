@@ -77,7 +77,11 @@ module Map =
        ||> Seq.fold (fun acc key ->
            let aValue = mapA |> Map.tryFind key
            let bValue = mapB |> Map.tryFind key
-           acc |> Map.add key (f aValue bValue))
+           match aValue, bValue with
+           | None, None -> failwith "Something has gone very wrong"
+           | None, Some bValue -> acc |> Map.add key bValue
+           | Some aValue, None -> acc |> Map.add key aValue
+           | Some aValue, Some bValue -> acc |> Map.add key (f aValue bValue))
 
     let mergeAll f maps =
        let allKeys = maps |> Seq.collect keys |> Seq.distinct
@@ -89,10 +93,10 @@ module Map =
            let values = maps |> Seq.map (Map.tryFind key)
            acc |> Map.add key (f values))
 
-    // Replaces a value in a map by first finding it, calling a given function
+    // Update a value in a map by first finding it, calling a given function
     // with that value (or a default if none was found), then setting it back
     // in the Map
-    let replace key defaultValue f m =
+    let update key defaultValue f m =
         let existing = m |> Map.tryFind key |> Option.defaultValue defaultValue
         m |> Map.add key (f existing)
 
@@ -179,6 +183,11 @@ module List =
         |> List.map (fun (key, grp) ->
             key, (grp |> List.map snd |> List.reduce reducer ))
 
+    let groupByTuple (xs : ('a * 'b) list) =
+        xs
+        |> List.groupBy fst
+        |> List.map (fun (k,v) -> k, v |> List.map snd)
+
     let partitionBy (fn : 'x -> Choice<'a,'b>)  (lst: 'x list) =
         (lst, ([],[]))
         ||> List.foldBack (fun x (accA, accB) ->
@@ -208,7 +217,6 @@ module Seq =
         xs
         |> Seq.groupBy fst
         |> Seq.map (fun (k,v) -> k, v |> Seq.map snd)
-        |> Map
 
     let split separator seq =
         (seq, [[]])
