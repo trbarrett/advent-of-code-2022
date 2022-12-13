@@ -263,6 +263,48 @@ module String =
             |> List.ofSeq)
         |> List.ofSeq
 
+module ArrayOfArrays =
+    let tryFindIndex predicate (aoa : 'T[][]) =
+        let rec loop rowNo =
+            if rowNo >= aoa.Length then None
+            else
+                match Array.tryFindIndex predicate aoa[rowNo] with
+                | Some colNo -> Some (rowNo, colNo)
+                | None -> loop (rowNo + 1)
+
+        loop 0
+
+    let findIndexes predicate (aoa : 'T[][]) =
+        [| for rowNo in 0..(aoa.Length - 1) do
+               for colNo in 0..(aoa[rowNo].Length - 1) do
+                   if (predicate aoa.[rowNo].[colNo])
+                      then yield rowNo, colNo |]
+
+    let get (rowNo, colNo) (aoa : 'T[][]) =
+        aoa.[rowNo].[colNo]
+
+    let tryGet (rowNo, colNo) (aoa : 'T[][]) =
+        if rowNo < 0 || rowNo >= aoa.Length then None
+        elif colNo < 0 || colNo >= aoa[rowNo].Length then None
+        else Some aoa.[rowNo].[colNo]
+
+    let tryGeti (rowNo, colNo) (aoa : 'T[][]) =
+        if rowNo < 0 || rowNo >= aoa.Length then None
+        elif colNo < 0 || colNo >= aoa[rowNo].Length then None
+        else Some ((rowNo, colNo), aoa.[rowNo].[colNo])
+
+    let map (mapping: 'T -> 'U) (aoa : 'T[][]) =
+        [| for rowNo in 0..(aoa.Length - 1) do
+               [| for colNo in 0..(aoa[rowNo].Length - 1) do
+                      yield mapping aoa.[rowNo].[colNo] |] |]
+
+    let mapi (mapping: int -> int -> 'T -> 'U) (aoa : 'T[][]) =
+        [| for rowNo in 0..(aoa.Length - 1) do
+               [| for colNo in 0..(aoa[rowNo].Length - 1) do
+                      yield (mapping rowNo colNo aoa.[rowNo].[colNo]) |] |]
+
+    let transpose = Array.transpose
+
 let (|StartsWith|_|) (p:string) (s:string) =
     if s.StartsWith(p)
     then Some(s.Substring(p.Length))

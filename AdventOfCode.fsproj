@@ -7,6 +7,7 @@
 
     <ItemGroup>
         <None Include="Helper.fsx" />
+        <None Include="AStar.fsx" />
         <None Include="Range.fsx" />
         <None Include="Day01.fsx" />
         <None Include="Day02.fsx" />
@@ -19,6 +20,7 @@
         <None Include="Day09.fsx" />
         <None Include="Day10.fsx" />
         <None Include="Day11.fsx" />
+        <None Include="Day12.fsx" />
     </ItemGroup>
 
     <ItemGroup>
