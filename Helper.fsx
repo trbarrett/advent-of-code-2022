@@ -102,18 +102,29 @@ module Map =
 
 module Set =
 
+    let getExtents points =
+        let x,y = Set.minElement points
+        ((x, x, y, y), points)
+        ||> Seq.fold (fun (xMin, xMax, yMin, yMax) (x, y) ->
+            min xMin x, max xMax x, min yMin y, max yMax y)
+
     // If the set contains points (x,y tuples), then this function will print
     // out the full grid, with '.' for empty spaces, '#' for points within
     // the set, and 'o' for the origin
     let printSetPoints tails =
-        let getExtents tails =
-            let x,y = Set.minElement tails
-            ((x, x, y, y), tails)
-            ||> Seq.fold (fun (xMin, xMax, yMin, yMax) (x, y) ->
-                min xMin x, max xMax x, min yMin y, max yMax y)
-
         let (xMin, xMax, yMin, yMax) = getExtents tails
         [yMax..(-1)..yMin]
+        |> List.iter (fun y ->
+            [xMin..xMax]
+            |> List.iter (fun x ->
+                if (x,y) = (0,0) then printf "o"
+                elif Set.contains (x,y) tails then printf "#"
+                else printf ".")
+            printfn "")
+
+    let printSetPointsBottomToTop tails =
+        let (xMin, xMax, yMin, yMax) = getExtents tails
+        [yMin..yMax]
         |> List.iter (fun y ->
             [xMin..xMax]
             |> List.iter (fun x ->
@@ -330,6 +341,7 @@ module Int32 =
         | _ -> None
 
 module Math =
+
     /// Takes a seq of int64 digits and converts them into a single number
     /// based on position. e.g. [ 4L; 5L; 7L; 2L; 7L ] -> 45727L
     let digitsToInt64 digits =
